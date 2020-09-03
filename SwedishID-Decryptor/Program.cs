@@ -8,23 +8,41 @@ namespace SwedishID_Decryptor
     {
         static void Main(string[] args)
         {
-            // Prompt the user for input data
-            Write("First name: ");
-            string firstName = ReadLine();
 
-            Write("Last name: ");
-            string lastName = ReadLine();
+            string firstName;
+            string lastName;
+            string socialSecurityNumber;
 
-            Write("Social Security Number: ");
-            string socialSecurityNumber = ReadLine();
+            // If paramters were given upon the program start
+            if(args.Length >= 3)
+            {
+                // assign the data to respective variables
+                firstName = args[0];
+                lastName = args[1];
+                socialSecurityNumber = args[2];
+            }
+            else
+            {
+                // prompt the user for input data
+                // assign the data to respective variables
+                Write("First name: ");
+                firstName = ReadLine();
+
+                Write("Last name: ");
+                lastName = ReadLine();
+
+                Write("Social Security Number: ");
+                socialSecurityNumber = ReadLine();
+            }
             
-
+     
 
             // Check the input for validity:
-              // Purify the input number-string: remove "-" 
+              
+              // Purify the input number-string 
             string socialSecurityNumberClean = socialSecurityNumber.Replace("-", "");
             
-              // If the purified number-string is NOT convertable to float...
+              // If the purified number-string is NOT convertable to float = user input is NOT valis
             if(!float.TryParse(socialSecurityNumberClean, out float socialSecurityNumberIntegerified))
             {
                // terminate the program softly
@@ -86,7 +104,7 @@ namespace SwedishID_Decryptor
 
 
             // ------------------------------------------ Define generation ------------------------------------------------- // 
-            // source for calculations: http://socialmarketing.org/archives/generations-xy-z-and-the-others/
+            // source: http://socialmarketing.org/archives/generations-xy-z-and-the-others/
 
             int birthYear = birthDate.Year;
 
@@ -148,6 +166,8 @@ namespace SwedishID_Decryptor
                       $"\nAge: {age}" +
                       $"\n\nGeneration: {generation}" +
                       $"\nShaping events: {generationInformation}");
+
+            ReadLine();
         }
     }
 }

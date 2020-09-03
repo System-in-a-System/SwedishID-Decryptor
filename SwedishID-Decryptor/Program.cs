@@ -42,7 +42,7 @@ namespace SwedishID_Decryptor
               // Purify the input number-string 
             string socialSecurityNumberClean = socialSecurityNumber.Replace("-", "");
             
-              // If the purified number-string is NOT convertable to float = user input is NOT valis
+              // If the purified number-string is NOT convertable to float = user input is NOT valid
             if(!float.TryParse(socialSecurityNumberClean, out float socialSecurityNumberIntegerified))
             {
                // terminate the program softly

@@ -17,6 +17,21 @@ namespace SwedishID_Decryptor
 
             Write("Social Security Number: ");
             string socialSecurityNumber = ReadLine();
+            
+
+
+            // Check the input for validity:
+              // Purify the input number-string: remove "-" 
+            string socialSecurityNumberClean = socialSecurityNumber.Replace("-", "");
+            
+              // If the purified number-string is NOT convertable to float...
+            if(!float.TryParse(socialSecurityNumberClean, out float socialSecurityNumberIntegerified))
+            {
+               // terminate the program softly
+                WriteLine("Invalid Social Security Number");
+                ReadLine();
+                return;
+            }
 
 
 
@@ -53,6 +68,7 @@ namespace SwedishID_Decryptor
             // if the length of SSN is not valid...
             else
             {
+                // terminate the program softly
                 WriteLine("Invalid Social Security Number...");
                 ReadLine();
                 return;

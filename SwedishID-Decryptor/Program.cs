@@ -78,59 +78,55 @@ namespace SwedishID_Decryptor
             {
                 generation = "Depression generation";
 
-                generationInformation = "the Great Depression, the Global Unrest";
+                generationInformation = "the Great Depression, the Global Unrest.";
             }
             else if (birthYear >= 1922 && birthYear <= 1927)
             {
                 generation = "War generation";
 
-                generationInformation = "the Korean War, the Second World War, the Cold War";
+                generationInformation = "the Korean War, the Second World War, the Cold War.";
             }
             else if (birthYear >= 1928 && birthYear <= 1945)
             {
                 generation = "Post-War generation";
 
-                generationInformation = "post - war economic boom, the growth in Cold War tensions," +
-                                        "\nthe potential for nuclear war and other never before seen threats.";
+                generationInformation = "post-war economic boom, Cold War tensions, the potential for nuclear war.";
             }
             else if (birthYear >= 1946 && birthYear <= 1964)
             {
                 generation = "Baby-Boomers generation";
 
-                generationInformation = "post-WWII optimism, the cold war, and the hippie movement";
+                generationInformation = "post-WWII optimism, the cold war, and the hippie movement.";
 
             }
             else if (birthYear >= 1965 && birthYear <= 1976)
             {
                 generation = "Lost generation";
 
-                generationInformation = "the end of the cold war, the rise of personal computing, " +
-                                         "\nand feeling lost between the two huge generations.";
+                generationInformation = "the end of the Cold war, the lowest voting participation rate, skepticism.";
             }
             else if (birthYear >= 1977 && birthYear <= 1994)
             {
                 generation = "Millennials";
 
-                generationInformation = "the Great Recession, the technological explosion of the internet" +
-                                        "\nand social media, and 9/11";
+                generationInformation = "the Great Recession, the technological explosion of the internet and social media, 9/11.";
             }
             else if (birthYear >= 1995 && birthYear <= 2015)
             {
                 generation = "Generation Z";
 
-                generationInformation = "smartphones, social media, never knowing a country not at war, " +
-                                        "\nand seeing the financial struggles of their parents.";
+                generationInformation = "smartphones, social media, never knowing a country not at war.";
             }
 
 
 
             // Clear the screen
             Clear();
-            Beep(100, 100);
+            Beep(200, 500);
 
 
             // Output the results
-            WriteLine($"Name: {firstName} + {lastName} " +
+            WriteLine($"Name: {firstName} {lastName} " +
                       $"\nSocial Security Number: {socialSecurityNumber} " +
                       $"\nGender: {gender}" +
                       $"\nAge: {age}" +

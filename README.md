@@ -3,5 +3,5 @@ A simple console-based program that takes in Swedish Social Security Number and 
 
 ## Instruction
 
-1. Import solution
-2. Run solution from the terminal
+1. Clone solution
+2. Run exe file from the terminal

@@ -2,9 +2,29 @@
 using static System.Console;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SwedishID_Decryptor
 {
+    public enum Gender
+    {
+        Male = 1,
+        Female = 2
+    }
+
+    public enum Generation
+    {
+        Generation_Z,
+        Millenials,
+        Lost_Generation,
+        Baby_Boomers,
+        Post_War_Generation,
+        War_Generation,
+        Depression_Generation,
+        Undefined
+    }
+
+
     class Program
     {
         static void Main(string[] args)
@@ -23,7 +43,7 @@ namespace SwedishID_Decryptor
                 // assign the data to respective variables
                 firstName = args[0];
                 lastName = args[1];
-                socialSecurityNumber = args[2];
+                socialSecurityNumber = ValidateSSNNumber(args[2]);
             }
             else
             {
@@ -45,13 +65,13 @@ namespace SwedishID_Decryptor
             // Decrypt information from the input Social Security Number: 
             
             // Define gender 
-            string gender = DefineGender(socialSecurityNumber);
+            Gender gender = DefineGender(socialSecurityNumber);
 
             // Define age 
             int age = DefineAge(socialSecurityNumber);
 
             // Define generation
-            string generation = DefineGeneration(socialSecurityNumber);
+            Generation generation = DefineGeneration(socialSecurityNumber);
             
 
             
@@ -75,7 +95,7 @@ namespace SwedishID_Decryptor
 
 
         // Method that checks user input for validity & formats it according to uniformed 12-digit format
-        static string ValidateSSNNumber(string inputNumber)
+        private static string ValidateSSNNumber(string inputNumber)
         {
             // Initialize SSN patterns in two versions
             string pattern1 = @"^\d{6}-\d{4}$";
@@ -129,20 +149,21 @@ namespace SwedishID_Decryptor
             return unifiedSocialSecurityNumber;
         }
 
-
+        
         // Method that retrieves gender information from Social Security Number
-        static string DefineGender(string inputSocialSecurityNumber)
+        private static Gender DefineGender(string inputSocialSecurityNumber)
         {
-            string gender;
+
+            Gender currentGender;
             int genderNumber = int.Parse(inputSocialSecurityNumber.Substring(inputSocialSecurityNumber.Length - 2, 1));
             bool isFemale = genderNumber % 2 == 0;
-            gender = isFemale ? "Female" : "Male";
-            return gender;
+            currentGender = isFemale ? Gender.Female : Gender.Male;
+            return currentGender;
         }
 
 
         // Method that retrieves age information from Social Security Number
-        static int DefineAge(string inputSocialSecurityNumber)
+        private static int DefineAge(string inputSocialSecurityNumber)
         {
             // Retrieve the birth date from input social security number
             DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -161,7 +182,7 @@ namespace SwedishID_Decryptor
 
 
         // Method that retrieves generation information from Social Security Number
-        static string DefineGeneration(string inputSocialSecurityNumber)
+        private static Generation DefineGeneration(string inputSocialSecurityNumber)
         {
             // Retrieve the birth date from input social security number
             DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
@@ -170,19 +191,20 @@ namespace SwedishID_Decryptor
             int birthYear = birthDate.Year;
 
             // Declare a target variable
-            string generation;
+            Generation generation;
 
             // Define the target variable
-            if (birthYear >= 1995) { generation = "Generation Z"; }
-            else if (birthYear >= 1977) { generation = "Millennials"; }
-            else if (birthYear >= 1965) { generation = "Lost generation"; }
-            else if (birthYear >= 1946) { generation = "Baby-Boomers generation"; }
-            else if (birthYear >= 1928) { generation = "Post-War generation"; }
-            else if (birthYear >= 1922) { generation = "War generation"; }
-            else if (birthYear >= 1912) { generation = "Depression generation"; }
-            else { generation = "Undefined"; }
+            if (birthYear >= 1995) { generation = Generation.Generation_Z; }
+            else if (birthYear >= 1977) { generation = Generation.Millenials; }
+            else if (birthYear >= 1965) { generation = Generation.Lost_Generation; }
+            else if (birthYear >= 1946) { generation = Generation.Baby_Boomers; }
+            else if (birthYear >= 1928) { generation = Generation.Post_War_Generation; }
+            else if (birthYear >= 1922) { generation = Generation.War_Generation; }
+            else if (birthYear >= 1912) { generation = Generation.Depression_Generation; }
+            else { generation = Generation.Undefined; }
 
             return generation;
         }
+
     }
 }

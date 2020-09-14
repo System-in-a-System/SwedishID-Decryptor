@@ -1,8 +1,7 @@
 ﻿using System;
-using static System.Console;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Security.Cryptography.X509Certificates;
+using static System.Console;
 
 namespace SwedishID_Decryptor
 {
@@ -35,12 +34,12 @@ namespace SwedishID_Decryptor
             string lastName;
             string socialSecurityNumber;
 
-            
 
-            // If paramters were given upon the program start...
-            if(args.Length >= 3)
+
+            // If parameters were given upon the program start...
+            if (args.Length >= 3)
             {
-                // assign the data to respective variables
+                // assign input data to respective variables
                 firstName = args[0];
                 lastName = args[1];
                 socialSecurityNumber = ValidateSSNNumber(args[2]);
@@ -61,21 +60,17 @@ namespace SwedishID_Decryptor
 
 
 
+            // Retrieve gender/age/generation from input Social Security Number: 
 
-            // Decrypt information from the input Social Security Number: 
-            
             // Define gender 
             Gender gender = DefineGender(socialSecurityNumber);
-
             // Define age 
-            int age = DefineAge(socialSecurityNumber);
-
+            uint age = DefineAge(socialSecurityNumber);
             // Define generation
             Generation generation = DefineGeneration(socialSecurityNumber);
-            
 
-            
-            
+
+
             // Clear the screen
             Clear();
             Beep(200, 500);
@@ -109,8 +104,7 @@ namespace SwedishID_Decryptor
             bool validSocialSecurityNumber = regex1.IsMatch(inputNumber) || regex2.IsMatch(inputNumber);
 
 
-
-            // Set up the loop that will prompt the user to enter SSN until it is valid
+            // Prompt the user to enter SSN until it is valid
             while (!validSocialSecurityNumber)
             {
                 WriteLine("Invalid Social Security Number...");
@@ -136,8 +130,8 @@ namespace SwedishID_Decryptor
                 {
                     unifiedSocialSecurityNumber = "20" + inputNumber;
                 }
-
             }
+
             // If the long pattern of SSN was followed...
             else
             {
@@ -149,7 +143,7 @@ namespace SwedishID_Decryptor
             return unifiedSocialSecurityNumber;
         }
 
-        
+
         // Method that retrieves gender information from Social Security Number
         private static Gender DefineGender(string inputSocialSecurityNumber)
         {
@@ -163,13 +157,13 @@ namespace SwedishID_Decryptor
 
 
         // Method that retrieves age information from Social Security Number
-        private static int DefineAge(string inputSocialSecurityNumber)
+        private static uint DefineAge(string inputSocialSecurityNumber)
         {
             // Retrieve the birth date from input social security number
             DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
-            
+
             // Calculate age based on retrieved data
-            int age = DateTime.Now.Year - birthDate.Year;
+            uint age = (uint)(DateTime.Now.Year - birthDate.Year);
 
             // Possible age correction depending on the day of the year
             if ((birthDate.Month > DateTime.Now.Month) || (birthDate.Month == DateTime.Now.Month && birthDate.Day > DateTime.Now.Day))

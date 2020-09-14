@@ -24,7 +24,7 @@ namespace SwedishID_Decryptor
     }
 
 
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -90,7 +90,7 @@ namespace SwedishID_Decryptor
 
 
         // Method that checks user input for validity & formats it according to uniformed 12-digit format
-        private static string ValidateSSNNumber(string inputNumber)
+        public static string ValidateSSNNumber(string inputNumber)
         {
             // Initialize SSN patterns in two versions
             string pattern1 = @"^\d{6}-\d{4}$";
@@ -139,13 +139,12 @@ namespace SwedishID_Decryptor
                 unifiedSocialSecurityNumber = inputNumber;
             }
 
-
             return unifiedSocialSecurityNumber;
         }
 
 
         // Method that retrieves gender information from Social Security Number
-        private static Gender DefineGender(string inputSocialSecurityNumber)
+        public static Gender DefineGender(string inputSocialSecurityNumber)
         {
 
             Gender currentGender;
@@ -157,32 +156,58 @@ namespace SwedishID_Decryptor
 
 
         // Method that retrieves age information from Social Security Number
-        private static uint DefineAge(string inputSocialSecurityNumber)
+        public static uint DefineAge(string inputSocialSecurityNumber)
         {
-            // Retrieve the birth date from input social security number
-            DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
 
-            // Calculate age based on retrieved data
-            uint age = (uint)(DateTime.Now.Year - birthDate.Year);
+            uint age = 0;
 
-            // Possible age correction depending on the day of the year
-            if ((birthDate.Month > DateTime.Now.Month) || (birthDate.Month == DateTime.Now.Month && birthDate.Day > DateTime.Now.Day))
+            try
             {
-                age--;
+                // Retrieve the birth date from input social security number
+                DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
+
+                // Calculate age based on retrieved data
+                age = (uint)(DateTime.Now.Year - birthDate.Year);
+
+                // Possible age correction depending on the day of the year
+                if ((birthDate.Month > DateTime.Now.Month) || (birthDate.Month == DateTime.Now.Month && birthDate.Day > DateTime.Now.Day))
+                {
+                    age--;
+                }
+
             }
+            catch (Exception)
+            {
+                WriteLine("An error occurred while parsing the Social Security Number...");
+                ReadKey();
+            }
+
 
             return age;
         }
 
 
         // Method that retrieves generation information from Social Security Number
-        private static Generation DefineGeneration(string inputSocialSecurityNumber)
+        public static Generation DefineGeneration(string inputSocialSecurityNumber)
         {
-            // Retrieve the birth date from input social security number
-            DateTime birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
 
-            // Retrieve the birth year
-            int birthYear = birthDate.Year;
+            DateTime birthDate;
+            int birthYear = 0;
+
+            try
+            {
+                // Retrieve the birth date from input social security number
+                birthDate = DateTime.ParseExact(inputSocialSecurityNumber.Substring(0, 8), "yyyyMMdd", CultureInfo.InvariantCulture);
+
+                // Retrieve the birth year
+                birthYear = birthDate.Year;
+            }
+            catch (Exception)
+            {
+                WriteLine("An error occurred while parsing Social Security Number...");
+                ReadKey();
+            }
+
 
             // Declare a target variable
             Generation generation;

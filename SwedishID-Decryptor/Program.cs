@@ -92,16 +92,21 @@ namespace SwedishID_Decryptor
         // Method that checks user input for validity & formats it according to uniformed 12-digit format
         public static string ValidateSSNNumber(string inputNumber)
         {
-            // Initialize SSN patterns in two versions
+            // Initialize SSN patterns in four versions
             string pattern1 = @"^\d{6}-\d{4}$";
             string pattern2 = @"^\d{8}-\d{4}$";
+            string pattern3 = @"^\d{10}$";
+            string pattern4 = @"^\d{12}$";
 
             Regex regex1 = new Regex(pattern1);
             Regex regex2 = new Regex(pattern2);
+            Regex regex3 = new Regex(pattern3);
+            Regex regex4 = new Regex(pattern4);
 
 
-            // Check inputNumber for validity
-            bool validSocialSecurityNumber = regex1.IsMatch(inputNumber) || regex2.IsMatch(inputNumber);
+            // Check the current input for validity
+            bool validSocialSecurityNumber = regex1.IsMatch(inputNumber) || regex2.IsMatch(inputNumber) ||
+                                             regex3.IsMatch(inputNumber) || regex4.IsMatch(inputNumber);
 
 
             // Prompt the user to enter SSN until it is valid
